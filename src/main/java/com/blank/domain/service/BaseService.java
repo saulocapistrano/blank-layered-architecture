@@ -26,4 +26,20 @@ public class BaseService {
         return repository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Recurso não encontrado com Id: " + id));
     }
+
+     public BaseEntity update(BaseEntity entityWithChanges) {
+         BaseEntity existingEntity = findById(entityWithChanges.getId());
+
+
+         existingEntity.setName(entityWithChanges.getName());
+         existingEntity.setDescription(entityWithChanges.getDescription());
+
+         return repository.save(existingEntity);
+     }
+
+    public void delete(Long id) {
+        findById(id);
+
+        repository.deleteById(id);
+    }
 }
